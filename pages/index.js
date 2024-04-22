@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 // import Dashboard from './post/home';
-import LoginPage from './login';
 import { SessionProvider } from 'next-auth/react';
+import LoginPage from './login';
 
-export default function Home({ children }) {
+export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
@@ -15,7 +15,7 @@ export default function Home({ children }) {
       <SessionProvider>
       <LoginPage/>
       </SessionProvider>
-
+      
     </div>
   );
 }

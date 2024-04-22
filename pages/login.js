@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
+import { useRouter } from 'next/router'; // Import useRouter
+import { signIn, useSession } from 'next-auth/react';
 import logoImage from './post/image/Gmail_Logo.png';
 import microsoft from './post/image/Microsoft.png';
 import opsjotter from './post/image/OpsJotter2.png';
@@ -11,6 +12,7 @@ const LoginPage = () => {
   const { data } = useSession();
   console.log(data);
   const [showPassword, setShowPassword] = useState(false);
+ 
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -71,8 +73,8 @@ const LoginPage = () => {
         fullWidth
         variant="outlined"
         startIcon={<Image src={logoImage} alt="Google sign-in" style={{ height: '24px', width: '24px' }} />}
-        sx={{ mt: 1, mb: 1, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}
         onClick={()=>signIn("google")}
+        sx={{ mt: 1, mb: 1, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}
       >
         Login With Gmail
       </Button>
