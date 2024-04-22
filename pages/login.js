@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router'; // Import useRouter
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import logoImage from './post/image/Gmail_Logo.png';
 import microsoft from './post/image/Microsoft.png';
 import opsjotter from './post/image/OpsJotter2.png';
@@ -9,21 +9,10 @@ import { Button, Container, TextField, Checkbox, FormControlLabel, Toolbar, Icon
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const LoginPage = () => {
+  const { data } = useSession();
+  console.log(data);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-
-  const handleGoogleSignIn = async () => {
-    // try {
-    //   const result = await signIn('google', { redirect: false });
-    //   if (result.ok && result.url) {
-    //     // Redirect to the dashboard page
-    //     router.push('/post/home');
-    //   }
-    // } catch (error) {
-    //   console.error('Error signing in with Google:', error);
-    //   // Handle errors here
-    // }
-  };
+ 
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -84,7 +73,7 @@ const LoginPage = () => {
         fullWidth
         variant="outlined"
         startIcon={<Image src={logoImage} alt="Google sign-in" style={{ height: '24px', width: '24px' }} />}
-        onClick={handleGoogleSignIn}
+        onClick={()=>signIn("google")}
         sx={{ mt: 1, mb: 1, boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.5)' }}
       >
         Login With Gmail
