@@ -18,6 +18,12 @@ const LoginPage = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
+  const router = useRouter();
+  const handleCreateAccount = () => {
+    // Navigate to the create account page
+    router.push('/newAccount');
+  };
+
   return (
     <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8 }}>
       <Toolbar style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -90,6 +96,7 @@ const LoginPage = () => {
         fullWidth
         variant="text"
         sx={{ mt: 1, mb: 1 }}
+        onClick={handleCreateAccount}
       >
         Create an Account
       </Button>
