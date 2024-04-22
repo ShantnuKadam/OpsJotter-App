@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { StyledListItem, StyledDrawer, drawerWidth } from '../../styles/homeStyle';
+import { StyledListItem,  drawerWidth } from '../../styles/homeStyle';
 import DashboardPage from './Dashboard';
 import ProjectPage from './clientList';
-import logoImage from './image/Nikqik_full_logo.png';
-import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Container, Grid, Button, Collapse, Menu, MenuItem, TextField } from '@mui/material';
+import MyForm from './transactions';
+import logoImage from './image/OpsJotter2.png';
+import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItemIcon, ListItemText, IconButton, Container, Grid, TextField, Menu, MenuItem } from '@mui/material';
 import {
   Menu as MenuIcon, Dashboard as DashboardIcon,
-  Notifications as NotificationsIcon, Chat as ChatIcon, Settings as SettingsIcon, Help as HelpIcon,
+  Settings as SettingsIcon, 
   LocalMall as LocalMallIcon, ManageAccounts as ManageAccountsIcon, Groups as GroupsIcon, DesignServices as DesignServicesIcon, Upload as UploadIcon, Assessment as AssessmentIcon, AccountCircle as AccountCircleIcon,
 
 } from '@mui/icons-material';
@@ -124,6 +125,8 @@ const Index = () => {
         return <DashboardPage />;
       case 'Client Overview':
         return <ProjectPage view="New Project" />;
+        case 'Transactions':
+          return <MyForm/>;
 
       // Additional cases for other views ...
       // default:
