@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { StyledListItem,  drawerWidth } from '../../styles/homeStyle';
 import DashboardPage from './Dashboard';
 import ProjectPage from './clientList';
-import MyForm from './transactions';
+import TransactionsList from './transactionList';
 import logoImage from './image/OpsJotter2.png';
 import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItemIcon, ListItemText, IconButton, Container, Grid, TextField, Menu, MenuItem } from '@mui/material';
 import {
@@ -126,7 +126,7 @@ const Index = () => {
       case 'Client Overview':
         return <ProjectPage view="New Project" />;
         case 'Transactions':
-          return <MyForm/>;
+          return <TransactionsList/>;
 
       // Additional cases for other views ...
       // default:
