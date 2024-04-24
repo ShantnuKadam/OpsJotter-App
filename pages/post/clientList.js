@@ -6,6 +6,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 export default function ClientsList() {
   const [clients, setclients] = useState([]);
   const [showDashboard, setShowDashboard] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -28,6 +29,12 @@ export default function ClientsList() {
   if (showDashboard) {
     return <NewClient />;
   }
+
+  const handleRowClick = (clientId) => {
+    // Navigate to the client detail page with the client ID
+    router.push(`/post/client/${clientId}`);
+  };
+
 
   return (
     <Box sx={{ width: '100%', margin: 'auto', paddingTop: 2 }}>
@@ -63,6 +70,9 @@ export default function ClientsList() {
               <TableRow
                 key={client._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                hover
+                onClick={() => handleRowClick(client._id)}
+                style={{ cursor: 'pointer' }}
               >
                 <TableCell>{client.firstName}</TableCell>
                 <TableCell>{client.lastName}</TableCell>

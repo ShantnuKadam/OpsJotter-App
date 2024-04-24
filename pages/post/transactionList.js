@@ -30,6 +30,11 @@ export default function TransactionsList() {
     return <NewTransaction />; 
   }
 
+  const handleRowClick = (transactionId) => {
+    // Navigate to the transaction detail page with the transaction ID
+    router.push(`/post/transaction/${transactionId}`);
+  };
+
   return (
     <Box sx={{ width: '100%', margin: 'auto', paddingTop: 2 }}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2 }}>
@@ -57,13 +62,16 @@ export default function TransactionsList() {
           <TableBody>
             {transactions.map((transaction) => (
               <TableRow
-                key={transaction._id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
+              key={transaction._id}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              hover
+              onClick={() => handleRowClick(transaction._id)} // Updated line
+              style={{ cursor: 'pointer' }} // Added for visual feedback
+            >
                 <TableCell >
                   {transaction.jobnumber}
                 </TableCell>
-                <TableCell>{transaction.userID}</TableCell>
+                <TableCell>{transaction.userID }</TableCell>
                 <TableCell>{transaction.billable.toString()}</TableCell>
                 <TableCell>{transaction.serviceproviderid}</TableCell>
                 <TableCell>{transaction.referncenumber}</TableCell>
