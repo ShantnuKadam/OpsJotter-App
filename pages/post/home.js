@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import { StyledListItem,  drawerWidth } from '../../styles/homeStyle';
 import DashboardPage from './Dashboard';
 import ProjectPage from './clientList';
 import TransactionsList from './transactionList';
-import logoImage from './image/OpsJotter2.png';
 import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItemIcon, ListItemText, IconButton, Container, Grid, TextField, Menu, MenuItem } from '@mui/material';
 import {
   Menu as MenuIcon, Dashboard as DashboardIcon,
@@ -18,6 +16,16 @@ const Index = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeView, setActiveView] = useState('Dashboard');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [userName, setUserName] = useState('');
+
+  // useEffect(() => {
+  //   // Retrieve the stored name when the component mounts
+  //   const storedName = localStorage.getItem('userName');
+  //   if (storedName) {
+  //     setUserName(storedName);
+  //   }
+  // }, []);
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,9 +47,9 @@ const Index = () => {
 
   const drawer = (
     <div>
-      <Toolbar>
-        <Image src={logoImage} alt="Company Logo" style={{ width: '80%', maxWidth: '450px', height: 'auto' }} />
-      </Toolbar>
+      {/* <Typography variant="h5" component="h1" gutterBottom style={{ color: 'blue',marginTop: '20px',marginLeft: '20px' }}>
+       Hi, {userName}
+      </Typography> */}
 
       <List>
         <StyledListItem
