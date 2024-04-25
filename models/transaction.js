@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const transactionSchema = new mongoose.Schema({
-  jobnumber: { type: String, select: false },
+  jobnumber: String,
   userID: String,
   billable: String,
   serviceproviderid: String,

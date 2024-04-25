@@ -1,87 +1,99 @@
-import React, { useState } from 'react';
-import AddIcon from '@mui/icons-material/Add';
-import ProjectPage from './newClient';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box, Dialog, DialogTitle, DialogContent, TextField, DialogActions } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import NewClient from './newClient';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Box } from '@mui/material';
 
-export default function Home() {
-  const [rows, setRows] = useState([
-    { id: 1, name: 'John Parker', location: 'Sydney', status: 'Active' },
-    { id: 2, name: 'Alicia', location: 'Qatar', status: 'Inactive' },
-    { id: 3, name: 'Sonal', location: 'India', status: 'Retired' },
-  ]);
-
+export default function ClientsList() {
+  const [clients, setclients] = useState([]);
   const [showDashboard, setShowDashboard] = useState(false);
+  const router = useRouter();
 
-  const [newRow, setNewRow] = useState({
-    name: '',
-    location: '',
-    status: '',
-  });
+  useEffect(() => {
+    const fetchClients = async () => {
+      const response = await fetch('/api/createClient');
+      if (response.ok) {
+        const data = await response.json();
+        setclients(data.clients);
+      } else {
+        console.error('Failed to fetch clients');
+      }
+    };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setNewRow(prev => ({ ...prev, [name]: value }));
-  };
+    fetchClients();
+  }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newId = rows.length + 1;
-    setRows(prevRows => [...prevRows, { id: newId, ...newRow }]);
-    setNewRow({ name: '', location: '', status: '' });
-  };
-
-  const handleNewClientClick = () => {
-    setShowDashboard(true); 
+  const handleNewPage = () => {
+    setShowDashboard(true);
   };
 
   if (showDashboard) {
-    return <ProjectPage />; 
+    return <NewClient />;
   }
 
+  const handleRowClick = (clientId) => {
+    // Navigate to the client detail page with the client ID
+    router.push(`/post/client/${clientId}`);
+  };
+
+
   return (
-    <>
-       <Box sx={{ marginBottom: 2 }}>
-       <Button
+    <Box sx={{ width: '100%', margin: 'auto', paddingTop: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 2 }}>
+        <Button
           variant="contained"
-          startIcon={<AddIcon />}
-          sx={{ margin: 1 }}
-          onClick={() => handleNewClientClick('New client')}
+          backgroundColor='blue'
+          color="primary"
+          onClick={handleNewPage}
         >
-          New Client
+          Open New Page
         </Button>
       </Box>
-
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>Sr No</TableCell>
-              <TableCell>Name</TableCell>
-              <TableCell>Contact details</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Status</TableCell>
+            <TableRow sx={{ '& th': { backgroundColor: 'blue', color: 'white' } }}>
+              <TableCell>firstName</TableCell>
+              <TableCell>lastName</TableCell>
+              <TableCell>suffix</TableCell>
+              <TableCell>customerDisplayName</TableCell>
+              <TableCell>companyName</TableCell>
+              <TableCell>email</TableCell>
+              <TableCell>phone</TableCell>
+              <TableCell>fax</TableCell>
+              <TableCell>abnNumber</TableCell>
+              <TableCell>postCode</TableCell>
+              {/* Add more headers if needed */}
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {clients.map((client) => (
               <TableRow
-                key={row.id}
+                key={client._id}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                hover
+                onClick={() => handleRowClick(client._id)}
+                style={{ cursor: 'pointer' }}
               >
-                <TableCell component="th" scope="row">
-                  {row.id.toString().padStart(2, '0')}
-                </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>
-                  <Button variant="contained">View</Button>
-                </TableCell>
-                <TableCell>{row.location}</TableCell>
-                <TableCell>{row.status}</TableCell>
+                <TableCell>{client.firstName}</TableCell>
+                <TableCell>{client.lastName}</TableCell>
+                <TableCell>{client.suffix}</TableCell>
+                <TableCell>{client.customerDisplayName}</TableCell>
+                <TableCell>{client.companyName}</TableCell>
+                <TableCell>{client.email}</TableCell>
+                <TableCell>{client.phone}</TableCell>
+                <TableCell>{client.fax}</TableCell>
+                <TableCell>{client.abnNumber}</TableCell>
+                <TableCell>{client.postCode}</TableCell>
+                {/* <TableCell>{client.suffix}</TableCell>
+                <TableCell>{client.suffix}</TableCell>
+                <TableCell>{client.suffix}</TableCell>
+                <TableCell>{client.suffix}</TableCell> */}
+                {/* Add more cells if needed */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 }

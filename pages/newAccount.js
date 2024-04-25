@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import Image from 'next/image';
-import Image2 from './post/image/OpsJotter2.png';
+import { useRouter } from 'next/router';
 import { Paper, Typography, CircularProgress, Alert, Snackbar, InputAdornment, IconButton, Button, TextField } from '@mui/material';
 
 const CreateAccount = () => {
@@ -14,77 +13,57 @@ const CreateAccount = () => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('success');
 
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-    };
-
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    };
-
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value);
-    };
-
-    const handleShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
+    const handleNameChange = (event) => setName(event.target.value);
+    const handleEmailChange = (event) => setEmail(event.target.value);
+    const handlePasswordChange = (event) => setPassword(event.target.value);
+    const handleShowPassword = () => setShowPassword(!showPassword);
+    const router = useRouter();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         setIsLoading(true);
 
-
-        //--------------------------mongodb post api-------------------------------------------------
-
-        const response = await fetch('/api/userCreate', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, email, password }),
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log('Client created:', data);
-            // router.push('/post/clientList');
-        } else {
-            console.error('Failed to create client');
-        }
-
-
-
-
-
-
-        //------------------email notifaction api--------------------------------------------------------
+        // Try to create the user in the MongoDB database
         try {
-            // Replace with your actual account creation logic (including secure password hashing)
-            const response = await fetch('/api/send-email', {
+            const response = await fetch('/api/userCreate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email, password }),
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to create account');
-            }
+            if (!response.ok) throw new Error('Failed to create account');
 
-            setSnackbarMessage('Account created successfully!');
+            const data = await response.json();
+            console.log('Client created:', data);
+
+            // Store the name in localStorage
+            // localStorage.setItem('userName', name);
+
+
+
+            // If user creation is successful, send an email notification
+            const emailResponse = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email }),
+            });
+
+            if (!emailResponse.ok) throw new Error('Email notification failed');
+
+            setSnackbarMessage('Account created and email sent successfully!');
             setSnackbarSeverity('success');
+        } catch (error) {
+            console.error('Error:', error);
+            setSnackbarMessage(error.message);
+            setSnackbarSeverity('error');
+        } finally {
+            setIsLoading(false);
             setSnackbarOpen(true);
+            // Reset form fields after the operation
             setName('');
             setEmail('');
             setPassword('');
-        } catch (error) {
-            console.error('Error creating account:', error);
-            setSnackbarMessage('Error creating account. Please try again later.');
-            setSnackbarSeverity('error');
-            setSnackbarOpen(true);
-        } finally {
-            setIsLoading(false);
+            router.push('/post/home');
         }
     };
 
@@ -95,7 +74,6 @@ const CreateAccount = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper elevation={10} style={{ padding: 100, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <Image src={Image2} alt="Form Header" style={{ width: '90%', maxWidth: '300px', height: '90%' }}  />
                 <Typography variant="h4" style={{ textAlign: 'center', marginBottom: 20 }}>
                     Create Account
                 </Typography>
@@ -108,7 +86,6 @@ const CreateAccount = () => {
                         required
                         fullWidth
                         margin="normal"
-                        style={{ width: '100%' }}
                     />
                     <TextField
                         label="Email"
@@ -119,7 +96,6 @@ const CreateAccount = () => {
                         required
                         fullWidth
                         margin="normal"
-                        style={{ width: '100%' }}
                     />
                     <TextField
                         label="Password"

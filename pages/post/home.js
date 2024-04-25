@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import { StyledListItem,  drawerWidth } from '../../styles/homeStyle';
+import React, { useState, useEffect } from 'react';
+import { StyledListItem, drawerWidth } from '../../styles/homeStyle';
 import DashboardPage from './Dashboard';
 import ProjectPage from './clientList';
-import MyForm from './transactions';
-import logoImage from './image/OpsJotter2.png';
+import TransactionsList from './transactionList';
+import Services from './Service';
 import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItemIcon, ListItemText, IconButton, Container, Grid, TextField, Menu, MenuItem } from '@mui/material';
 import {
   Menu as MenuIcon, Dashboard as DashboardIcon,
-  Settings as SettingsIcon, 
+  Settings as SettingsIcon,
   LocalMall as LocalMallIcon, ManageAccounts as ManageAccountsIcon, Groups as GroupsIcon, DesignServices as DesignServicesIcon, Upload as UploadIcon, Assessment as AssessmentIcon, AccountCircle as AccountCircleIcon,
 
 } from '@mui/icons-material';
@@ -18,6 +17,16 @@ const Index = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeView, setActiveView] = useState('Dashboard');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [userName, setUserName] = useState('');
+
+  // useEffect(() => {
+  //   // Retrieve the stored name when the component mounts
+  //   const storedName = localStorage.getItem('userName');
+  //   if (storedName) {
+  //     setUserName(storedName);
+  //   }
+  // }, []);
+
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -39,9 +48,9 @@ const Index = () => {
 
   const drawer = (
     <div>
-      <Toolbar>
-        <Image src={logoImage} alt="Company Logo" style={{ width: '80%', maxWidth: '450px', height: 'auto' }} />
-      </Toolbar>
+      {/* <Typography variant="h5" component="h1" gutterBottom style={{ color: 'blue',marginTop: '20px',marginLeft: '20px' }}>
+       Hi, {userName}
+      </Typography> */}
 
       <List>
         <StyledListItem
@@ -125,8 +134,10 @@ const Index = () => {
         return <DashboardPage />;
       case 'Client Overview':
         return <ProjectPage view="New Project" />;
-        case 'Transactions':
-          return <MyForm/>;
+      case 'Transactions':
+        return <TransactionsList />;
+      case 'Services Overview':
+        return <Services />;
 
       // Additional cases for other views ...
       // default:
