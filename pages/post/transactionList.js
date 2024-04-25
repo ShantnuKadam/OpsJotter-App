@@ -44,7 +44,7 @@ export default function TransactionsList() {
           color="primary"
           onClick={handleNewPage}
         >
-          Open New Page
+          New Transactions
         </Button>
       </Box>
       <TableContainer component={Paper}>

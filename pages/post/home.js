@@ -48,9 +48,9 @@ const Index = () => {
 
   const drawer = (
     <div>
-      {/* <Typography variant="h5" component="h1" gutterBottom style={{ color: 'blue',marginTop: '20px',marginLeft: '20px' }}>
+      <Typography variant="h5" component="h1" gutterBottom style={{ color: 'blue',marginTop: '20px',marginLeft: '20px' }}>
        Hi, {userName}
-      </Typography> */}
+      </Typography>
 
       <List>
         <StyledListItem

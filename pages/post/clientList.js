@@ -45,7 +45,7 @@ export default function ClientsList() {
           color="primary"
           onClick={handleNewPage}
         >
-          Open New Page
+          New Client
         </Button>
       </Box>
       <TableContainer component={Paper}>
