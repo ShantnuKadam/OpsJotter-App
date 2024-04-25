@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyledListItem,  drawerWidth } from '../../styles/homeStyle';
+import { StyledListItem, drawerWidth } from '../../styles/homeStyle';
 import DashboardPage from './Dashboard';
 import ProjectPage from './clientList';
 import TransactionsList from './transactionList';
+import Services from './Service';
 import { Box, CssBaseline, AppBar, Toolbar, Typography, Drawer, List, ListItemIcon, ListItemText, IconButton, Container, Grid, TextField, Menu, MenuItem } from '@mui/material';
 import {
   Menu as MenuIcon, Dashboard as DashboardIcon,
-  Settings as SettingsIcon, 
+  Settings as SettingsIcon,
   LocalMall as LocalMallIcon, ManageAccounts as ManageAccountsIcon, Groups as GroupsIcon, DesignServices as DesignServicesIcon, Upload as UploadIcon, Assessment as AssessmentIcon, AccountCircle as AccountCircleIcon,
 
 } from '@mui/icons-material';
@@ -133,8 +134,10 @@ const Index = () => {
         return <DashboardPage />;
       case 'Client Overview':
         return <ProjectPage view="New Project" />;
-        case 'Transactions':
-          return <TransactionsList/>;
+      case 'Transactions':
+        return <TransactionsList />;
+      case 'Services Overview':
+        return <Services />;
 
       // Additional cases for other views ...
       // default:
