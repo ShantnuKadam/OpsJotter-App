@@ -25,7 +25,6 @@ export default async function handler(req, res) {
                 <html>
                   <body>
                     <p>Thank you for creating an account with us!</p>
-                    <p>Please confirm your email address by clicking this link: <a href="[confirmation link]">Confirm Email</a></p>
                   </body>
                 </html>`, // Replace with actual confirmation link
       });

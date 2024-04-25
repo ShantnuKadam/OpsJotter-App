@@ -37,7 +37,7 @@ const CreateAccount = () => {
             console.log('Client created:', data);
 
             // Store the name in localStorage
-            localStorage.setItem('userName', name);
+            // localStorage.setItem('userName', name);
 
 
 
